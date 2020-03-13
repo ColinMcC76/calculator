@@ -1,0 +1,57 @@
+@media screen and (min-width: 600px) {
+    #myApp {
+        width: 60vw;
+        padding-top: 10vh;
+    }
+    #row {
+        height: 60vh
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #myApp {
+        width: 100vw;
+        padding-top: 0px;
+    }
+    #row {
+        height: 100vh
+    }
+    .btn-primary {
+        color: rgba(255, 255, 255, .75);
+        background-color: rgba(255, 255, 255, 0)!important;
+        border-color: rgba(0, 0, 0, 1);
+    }
+}
+
+html,
+body {
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(to right, red, yellow);
+}
+
+#previousOpp,
+#currentOpp {
+    font-size: 2em;
+    word-wrap: break-word;
+}
+
+#calculatorScreen {
+    color: rgba(255, 255, 255, .75);
+    min-height: 15vh;
+    /* max-height: auto; */
+    width: 100%;
+    background-color: rgba(0, 0, 0, .75);
+}
+
+.btn-primary {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(255, 255, 255, .75);
+    border-color: rgba(0, 0, 0, 1);
+}
+
+.btn-primary:hover {
+    color: rgba(255, 255, 255, .75)!important;
+    background-color: rgba(0, 0, 0, 1)!important;
+    border-color: rgba(255, 255, 255, .75)!important;
+}
