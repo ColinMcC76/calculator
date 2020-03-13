@@ -6,6 +6,11 @@
     #row {
         height: 60vh
     }
+    .btn-primary {
+        color: rgba(0, 0, 0, 1);
+        background-color: rgba(255, 255, 255, .75);
+        border-color: rgba(0, 0, 0, 1);
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -17,8 +22,8 @@
         height: 100vh
     }
     .btn-primary {
-        color: rgba(255, 255, 255, .75);
-        background-color: rgba(255, 255, 255, 0)!important;
+        color: rgba(0, 0, 0, 1);
+        background-color: rgba(255, 255, 255, 0);
         border-color: rgba(0, 0, 0, 1);
     }
 }
@@ -28,6 +33,10 @@ body {
     height: 100vh;
     width: 100vw;
     background-image: linear-gradient(to right, red, yellow);
+}
+
+.btn {
+    font-size: 2em;
 }
 
 #previousOpp,
@@ -42,12 +51,6 @@ body {
     /* max-height: auto; */
     width: 100%;
     background-color: rgba(0, 0, 0, .75);
-}
-
-.btn-primary {
-    color: rgba(0, 0, 0, 1);
-    background-color: rgba(255, 255, 255, .75);
-    border-color: rgba(0, 0, 0, 1);
 }
 
 .btn-primary:hover {
