@@ -1,3 +1,4 @@
+// creates my proto class "element", used to putbasic html elements on the page. 
 class Element {
     constructor(elementType) {
         this.element = document.createElement(elementType)
@@ -11,33 +12,20 @@ class Element {
     appendElement(parent, child) {
         parent.element.appendChild(child.element)
     }
-
 }
+// I extended the element class to make a button subclass, initially I added the onclick function here, but never actually utilized that part of the function.  
 class Button extends Element {
-    constructor(elementType, click = "") {
+    constructor(elementType) {
         super(elementType)
-        this.element.onclick = click
     }
-    buttonFunction() {
-        console.log('buttonFunction worked')
-    }
-
 }
 
-// var x = new Element('div')
-// x.buildElement('border', 'two')
-// x.appendElement(document.body, x.element)
-// console.log(x)
-// var y = new Button('button', allClearFunction)
-// y.buildElement('border', 'two')
-// y.appendElement(document.body, y.element)
-// console.log(y)
-
-
+// this creates the view class that puts all the html elements on the page, utilizing the buildCalc function. 
 class View {
     constructor() {};
 
     buildCalc() {
+        // I chose to create every div, so that I could manipulate each individually, with ease. By giving my buttons a type, I was able to select all of them by their personal type, (number),(operation),(del)...
         let myApp = document.getElementById("myApp")
         myApp.className = "container-fluid"
         let row = new Element("div")
@@ -117,35 +105,39 @@ class View {
 
     }
 }
+// calculator class used to do all the actual math of the calc. 
 class calculator {
     constructor(prevOp, currOp) {
-        this.prevOp = prevOp;
-        this.currOp = currOp;
-        this.operation = undefined
-    }
-
+            this.prevOp = prevOp;
+            this.currOp = currOp;
+            this.operation = undefined
+        }
+        // used to clear the screen of all numbers and operations. 
     allClearFunction() {
         console.log("all clear!")
         this.currOp.innerText = ""
         this.prevOp.innerText = ""
         this.operation = undefined
     };
+    // used to remove the last character of the screen
     remove() {
         let l = this.currOp.innerText.length
         this.currOp.innerText = this.currOp.innerText.substring(0, l - 1)
     };
+    // adds the number of the button last clicked to the screen, checks to make sure the number isnt already 9 digits, or if it already has a decimal point.
     appendNumber(number) {
-        if (this.currOp.innerText.length < 10) {
-            var concatStat = true
-            if (this.currOp.innerText.includes('.') && number === ".") {
-                concatStat = false
-                console.log("it's a decimal");
-            }
-            if (concatStat) {
-                this.currOp.innerText += number;
+            if (this.currOp.innerText.length < 10) {
+                var concatStat = true
+                if (this.currOp.innerText.includes('.') && number === ".") {
+                    concatStat = false
+                    console.log("it's a decimal");
+                }
+                if (concatStat) {
+                    this.currOp.innerText += number;
+                }
             }
         }
-    }
+        // checks the operation of the button pushed, stores the information, and later computes the function later on.
     chooseOperation(operation) {
         if (this.currOp.innerText === "" || this.currOp.innerText === ".") return
         if (this.prevOp.innerText !== "") {
@@ -155,45 +147,46 @@ class calculator {
         this.prevOp.innerText = this.currOp.innerText + operation;
         this.currOp.innerText = ''
     };
+    // actually preforms the math of the calculator. Checks the operation based on a case switch function.
     compute() {
-        // console.log("i'm doing it");
-        let computation = 0
-        const prev = parseFloat(this.prevOp.innerText)
-        const current = parseFloat(this.currOp.innerText)
-        if (isNaN(prev) || isNaN(current)) return
-        switch (this.operation) {
-            case "+":
-                computation = prev + current;
-                break;
-            case "-":
-                computation = prev - current;
-                break;
-            case "÷":
-                if (current !== 0) {
-                    computation = prev / current;
-                } else {
-                    computation = "error cannot divide by zero"
-                }
-                break;
-            case "x":
-                computation = prev * current;
-                break;
+            let computation = 0
+            const prev = parseFloat(this.prevOp.innerText)
+            const current = parseFloat(this.currOp.innerText)
+            if (isNaN(prev) || isNaN(current)) return
+            switch (this.operation) {
+                case "+":
+                    computation = prev + current;
+                    break;
+                case "-":
+                    computation = prev - current;
+                    break;
+                case "÷":
+                    if (current !== 0) {
+                        computation = prev / current;
+                    } else {
+                        computation = "error cannot divide by zero"
+                    }
+                    break;
+                case "x":
+                    computation = prev * current;
+                    break;
+            }
+            this.currOp.innerText = computation
+            this.operation = undefined;
+            this.prevOp.innerText = ''
         }
-        this.currOp.innerText = computation
-        this.operation = undefined;
-        this.prevOp.innerText = ''
-    }
+        //  uodates the screen, is called everytime a button is pressed. 
     updateDisplay() {
-        // this.view
+
         this.currOp.innerText = this.currOp.innerText
         this.prevOp.innerText = this.prevOp.innerText
-            // console.log("updating the string", this.currOp)
     };
 }
 
 
 let view = new View();
 view.buildCalc();
+// creates the calculator on the page
 
 
 const numberButtons = document.querySelectorAll('button[type="number"]');
@@ -204,17 +197,15 @@ const deleteButton = document.querySelector('button[type="del"]');
 const allClearButton = document.querySelector('button[type="allClear"]');
 const previousOperandTextDisplay = document.getElementById('previousOpp');
 const currentOperandTextDisplay = document.getElementById('currentOpp');
+// goes through all buttons, selects certain ones by type, and allows me to assign specific functions.
 
 
 
 let calc1 = new calculator(previousOperandTextDisplay, currentOperandTextDisplay);
 calc1.updateDisplay()
+    //actually creates the computer behind the calc to do the math.
 
 
-
-// console.log(currentOperandTextDisplay)
-// console.log(operationButtons)
-// console.log(currentOperandTextDisplay)
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         calc1.appendNumber(button.innerText);
@@ -241,3 +232,5 @@ equalButton.addEventListener('click', () => {
     calc1.compute();
     calc1.updateDisplay();
 })
+
+//all the event listeners added to the button.
